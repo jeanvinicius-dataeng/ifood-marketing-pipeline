@@ -63,17 +63,39 @@ clientes_dimensao AS (
         END,
         aceites
     FROM clientes_perfil
+),
+-- Grão: um grupo dentro de uma dimensão, com as taxas sem arredondar.
+por_grupo AS (
+    SELECT
+        d.ordem_dimensao,
+        d.dimensao,
+        d.ordem_grupo,
+        d.grupo,
+        count(*) AS clientes,
+        sum(d.aceites) AS aceites,
+        sum(d.aceites) / (count(*) * any_value(k.quantidade)) AS taxa,
+        count(*) FILTER (WHERE d.aceites > 0) / count(*) AS taxa_alguma
+    FROM clientes_dimensao AS d
+    CROSS JOIN campanhas AS k
+    GROUP BY d.ordem_dimensao, d.dimensao, d.ordem_grupo, d.grupo
 )
 SELECT
-    d.dimensao,
-    d.grupo,
-    count(*) AS clientes,
-    sum(d.aceites) AS aceites,
-    round(100.0 * sum(d.aceites) / (count(*) * any_value(k.quantidade)), 1)
-        AS taxa_aceite_pct,
-    round(100.0 * count(*) FILTER (WHERE d.aceites > 0) / count(*), 1)
-        AS pct_aceitou_alguma
-FROM clientes_dimensao AS d
-CROSS JOIN campanhas AS k
-GROUP BY d.ordem_dimensao, d.dimensao, d.ordem_grupo, d.grupo
-ORDER BY d.ordem_dimensao, d.ordem_grupo
+    dimensao,
+    grupo,
+    clientes,
+    aceites,
+    round(100.0 * taxa, 1) AS taxa_aceite_pct,
+    round(100.0 * taxa_alguma, 1) AS pct_aceitou_alguma,
+    -- Maior e menor taxa de aceite da dimensão; no empate, o primeiro grupo
+    -- na ordem de exibição.
+    row_number() OVER (
+        PARTITION BY dimensao ORDER BY taxa DESC, ordem_grupo
+    ) = 1 AS maior_taxa,
+    row_number() OVER (
+        PARTITION BY dimensao ORDER BY taxa, ordem_grupo
+    ) = 1 AS menor_taxa,
+    -- Quantas vezes a taxa deste grupo é a menor taxa da dimensão.
+    round(taxa / nullif(min(taxa) OVER (PARTITION BY dimensao), 0), 1)
+        AS vezes_menor_taxa
+FROM por_grupo
+ORDER BY ordem_dimensao, ordem_grupo

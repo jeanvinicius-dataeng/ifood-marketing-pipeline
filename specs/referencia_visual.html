@@ -1,0 +1,240 @@
+<title>Prévia Campanhas iFood</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Layout: uma coluna central de 1080px; topo com cena 3D, cartões de vidro, seções em painéis de vidro */
+:root{
+  --bg1:#0B0D12; --bg2:#141824; --fg:#F2F2F2; --fg2:#9AA0AE;
+  --accent:#FF3B4A; --bar:#3A4152; --bar2:#5B6375;
+  --glass:rgba(255,255,255,0.04); --line:rgba(255,255,255,0.08);
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-num:"Space Grotesk","Inter",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:linear-gradient(180deg,var(--bg1),var(--bg2)) fixed;background-color:var(--bg1);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:28px}
+.badge{align-self:flex-start;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg2);border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+h1{font-family:var(--f-num);font-weight:700;font-size:clamp(26px,4.6vw,44px);line-height:1.1;margin:0;text-wrap:balance}
+.sub{color:var(--fg2);margin:6px 0 0;max-width:62ch}
+.hero{position:relative;height:420px;border-radius:20px;overflow:hidden;background:radial-gradient(ellipse at 50% 85%,rgba(255,59,74,.10),transparent 60%),var(--glass);border:1px solid var(--line)}
+.hero canvas{display:block;width:100%;height:100%;cursor:grab}
+.hero canvas:active{cursor:grabbing}
+.lbl{position:absolute;transform:translate(-50%,-100%);font-family:var(--f-num);font-weight:700;font-size:15px;white-space:nowrap;pointer-events:none;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.lbl.base{transform:translate(-50%,8px);font-family:var(--f-body);font-weight:500;font-size:12px;color:var(--fg2)}
+.lbl.hot{color:var(--accent)}
+.hero-cap{position:absolute;left:20px;top:16px;right:20px;font-size:13px;color:var(--fg2)}
+.hero-cap b{color:var(--fg);font-weight:600}
+.hero canvas{cursor:default}
+.steps{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:6px;background:rgba(11,13,18,.7);border:1px solid var(--line);border-radius:999px;padding:4px;backdrop-filter:blur(8px)}
+.steps button{font:500 12.5px var(--f-body);color:var(--fg2);background:transparent;border:0;border-radius:999px;padding:7px 12px;cursor:pointer;white-space:nowrap}
+.steps button.on{background:var(--accent);color:#fff}
+.steps button:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.lbl.fade{transition:opacity .4s}
+.lbl.big{font-size:26px;text-align:center;line-height:1.1}
+.lbl.big small{display:block;font:500 12px var(--f-body);color:var(--fg2)}
+.lbl.big.hot small{color:#FFB4BA}
+@media (max-width:760px){.lbl.big{font-size:20px}.steps button{padding:7px 9px;font-size:11.5px}}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:18px;backdrop-filter:blur(8px);min-width:0}
+.card .k{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--fg2)}
+.card .v{font-family:var(--f-num);font-weight:700;font-size:clamp(26px,3.4vw,36px);line-height:1.15;margin-top:6px;font-variant-numeric:tabular-nums}
+.card .v.hot{color:var(--accent);text-shadow:0 0 24px rgba(255,59,74,.35)}
+.card .c{font-size:13px;color:var(--fg2);margin-top:4px}
+.sec{background:var(--glass);border:1px solid var(--line);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:14px;animation:up .7s ease both}
+.sec .tag{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg2)}
+.sec h2{font-family:var(--f-num);font-weight:700;font-size:clamp(19px,2.6vw,24px);line-height:1.25;margin:0;text-wrap:balance}
+.sec h2 em{font-style:normal;color:var(--accent)}
+.sec .exp{color:var(--fg2);font-size:13.5px;margin:-6px 0 0}
+.grid2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.grid2 h3{font-size:13px;font-weight:600;margin:0 0 8px;color:var(--fg)}
+.bars{display:flex;flex-direction:column;gap:9px}
+.row{display:grid;grid-template-columns:minmax(84px,128px) 1fr;align-items:center;gap:10px;font-size:13px}
+.row .n{color:var(--fg2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.track{position:relative;height:26px}
+.fill{height:100%;border-radius:7px;background:var(--bar);display:flex;align-items:center;justify-content:flex-end;padding-right:8px;min-width:46px;font-family:var(--f-num);font-weight:700;font-size:13px;color:var(--fg);transform-origin:left;animation:grow .9s cubic-bezier(.2,.8,.2,1) both}
+.fill.hot{background:linear-gradient(90deg,#c92a37,var(--accent));box-shadow:0 0 18px rgba(255,59,74,.35)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.vs .box{border:1px solid var(--line);border-radius:14px;padding:16px}
+.vs .big{font-family:var(--f-num);font-weight:700;font-size:clamp(24px,3.4vw,34px)}
+.vs .hot .big{color:var(--accent)}
+.vs .lb{font-size:12px;color:var(--fg2);text-transform:uppercase;letter-spacing:.05em}
+footer{color:var(--fg2);font-size:12.5px;border-top:1px solid var(--line);padding-top:16px}
+.note{font-size:12.5px;color:#FFB4BA;background:rgba(255,59,74,.08);border:1px solid rgba(255,59,74,.25);border-radius:12px;padding:10px 14px}
+@keyframes up{from{opacity:.0001;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleX(.05)}to{transform:scaleX(1)}}
+@media (max-width:760px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:1fr}.hero{height:300px}}
+@media (prefers-reduced-motion:reduce){.sec,.fill{animation:none}}
+</style>
+
+<div class="wrap">
+  <div class="note">Prévia do visual. Os números são aproximados, só pra mostrar o design. No seu dashboard eles vêm dos marts.</div>
+  <span class="badge">Pipeline de dados · case iFood</span>
+  <div>
+    <h1>Campanhas de marketing: quem responde e quem não responde</h1>
+    <p class="sub">2.002 clientes únicos e 5 campanhas, depois de remover 203 cadastros duplicados.</p>
+  </div>
+
+  <div class="hero" id="hero">
+    <div class="hero-cap"><b id="cap-t">Cada ponto é um aceite.</b> <span id="cap-s">A campanha 2 juntou só 26 aceites, contra 132 a 152 das outras.</span></div>
+    <div class="steps" role="tablist" aria-label="Cenas">
+      <button type="button" id="st-2" data-s="2">Por campanha</button>
+      <button type="button" id="st-1" data-s="1">Quem respondeu</button>
+      <button type="button" id="st-0" data-s="0">Todos os clientes</button>
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="card"><div class="k">Clientes</div><div class="v" data-n="2002" data-f="int">2.002</div><div class="c">sem os 203 duplicados</div></div>
+    <div class="card"><div class="k">Taxa de aceite geral</div><div class="v" data-n="6.0" data-f="pct">6,0%</div><div class="c">603 aceites em 5 campanhas</div></div>
+    <div class="card"><div class="k">Aceitaram alguma</div><div class="v" data-n="20.9" data-f="pct">20,9%</div><div class="c">79,1% nunca aceitaram</div></div>
+    <div class="card"><div class="k">Gasto médio de quem aceita</div><div class="v hot" data-n="1023.31" data-f="brl">R$ 1.023,31</div><div class="c">contra R$ 441,85 de quem nunca aceitou</div></div>
+  </div>
+
+  <section class="sec">
+    <span class="tag">Desempenho</span>
+    <h2>A campanha 2 converteu <em>5,5 vezes menos</em> que a média das outras</h2>
+    <p class="exp">Percentual de clientes que aceitaram cada campanha.</p>
+    <div class="bars" id="b-camp"></div>
+  </section>
+
+  <section class="sec">
+    <span class="tag">Alcance</span>
+    <h2>Ninguém aceitou as 5 campanhas, e <em>79,1%</em> nunca aceitaram nenhuma</h2>
+    <p class="exp">Percentual de clientes por quantidade de campanhas aceitas.</p>
+    <div class="bars" id="b-alc"></div>
+  </section>
+
+  <section class="sec">
+    <span class="tag">Gasto</span>
+    <h2>Quem aceita campanha gasta <em>2,3 vezes mais</em></h2>
+    <p class="exp">Gasto médio em 2 anos. Mostra relação, não prova que a campanha causou o gasto.</p>
+    <div class="vs">
+      <div class="box hot"><div class="lb">Aceitou alguma</div><div class="big">R$ 1.023,31</div></div>
+      <div class="box"><div class="lb">Nunca aceitou</div><div class="big">R$ 441,85</div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <span class="tag">Perfil</span>
+    <h2>Cliente sem filhos aceita <em>3,5 vezes mais</em>, e renda acima de 75 mil lidera com <em>19,1%</em></h2>
+    <p class="exp">Taxa de aceite por grupo de clientes.</p>
+    <div class="grid2">
+      <div><h3>Renda</h3><div class="bars" id="b-renda"></div></div>
+      <div><h3>Filhos</h3><div class="bars" id="b-filhos"></div></div>
+      <div><h3>Escolaridade</h3><div class="bars" id="b-esc"></div></div>
+    </div>
+  </section>
+
+  <footer>Dados do case público de marketing do iFood (Kaggle, licença CC0). Projeto de estudo, sem relação oficial com o iFood. Premissa: todos os clientes receberam as 5 campanhas.</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const CAMP=[{n:"Campanha 1",v:6.6},{n:"Campanha 2",v:1.3,hot:true},{n:"Campanha 3",v:7.3},{n:"Campanha 4",v:7.4},{n:"Campanha 5",v:7.6}];
+const br=(x,d=1)=>x.toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d});
+function bars(id,data,max){
+  const el=document.getElementById(id);
+  data.forEach((d,i)=>{
+    const r=document.createElement("div");r.className="row";
+    r.innerHTML=`<span class="n">${d.n}</span><div class="track"><div class="fill${d.hot?" hot":""}" style="width:${Math.max(4,d.v/max*100)}%;animation-delay:${i*60}ms">${br(d.v)}%</div></div>`;
+    el.appendChild(r);
+  });
+}
+bars("b-camp",CAMP,8);
+bars("b-alc",[{n:"0 campanhas",v:79.1,hot:true},{n:"1 campanha",v:14.5},{n:"2 campanhas",v:3.7},{n:"3 campanhas",v:2.2},{n:"4 campanhas",v:0.5}],80);
+bars("b-renda",[{n:"Até 35 mil",v:1.0},{n:"35 a 55 mil",v:2.5},{n:"55 a 75 mil",v:6.5},{n:"Acima de 75 mil",v:19.1,hot:true}],20);
+bars("b-filhos",[{n:"Sem filhos",v:12.3,hot:true},{n:"Com filhos",v:3.5}],20);
+bars("b-esc",[{n:"Básico",v:2.1},{n:"Graduação",v:5.9},{n:"Mestrado",v:5.7},{n:"Doutorado",v:6.8,hot:true}],20);
+
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+// números contando
+if(!reduce){document.querySelectorAll(".card .v").forEach(el=>{
+  const n=+el.dataset.n,f=el.dataset.f,t0=performance.now(),dur=1200;
+  const fmt=x=>f==="int"?Math.round(x).toLocaleString("pt-BR"):f==="pct"?br(x)+"%":"R$ "+br(x,2);
+  (function step(t){const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=fmt(n*e);if(p<1)requestAnimationFrame(step);else el.textContent=fmt(n);})(t0);
+});}
+
+// cena 3D: cada ponto é um cliente
+(function(){
+  const host=document.getElementById("hero");
+  let ok=false;try{const c=document.createElement("canvas");ok=!!(window.WebGLRenderingContext&&(c.getContext("webgl")||c.getContext("experimental-webgl")))&&window.THREE;}catch(e){}
+  if(!ok){host.querySelector(".steps").hidden=true;const b=document.createElement("div");b.className="bars";b.style.cssText="position:absolute;inset:56px 20px 20px";b.id="hero-fb";host.appendChild(b);bars("hero-fb",CAMP,8);return;}
+  const TOTAL=2002,ACEITOU=419,ACC=[132,26,146,148,152];
+  const NRED=ACC.reduce((a,b)=>a+b,0),NGRAY=TOTAL-ACEITOU;
+  const W=()=>host.clientWidth,H=()=>host.clientHeight;
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setPixelRatio(Math.min(2,devicePixelRatio));r.setSize(W(),H());host.insertBefore(r.domElement,host.firstChild);
+  const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(34,W()/H(),.1,100);
+  s.add(new THREE.AmbientLight(0xffffff,.55));
+  const d1=new THREE.DirectionalLight(0xffffff,.8);d1.position.set(4,10,6);s.add(d1);
+  const glow=new THREE.PointLight(0xff3b4a,1.6,10);glow.position.set(0,3,2);s.add(glow);
+  const geo=new THREE.SphereGeometry(.055,10,8);
+  const gray=new THREE.InstancedMesh(geo,new THREE.MeshStandardMaterial({color:0x6b7488,metalness:.2,roughness:.6}),NGRAY);
+  const red=new THREE.InstancedMesh(geo,new THREE.MeshStandardMaterial({color:0xffffff,emissive:0x330609,roughness:.4}),NRED);
+  const C_HOT=new THREE.Color(0xff3b4a),C_SIL=new THREE.Color(0x9aa3b5),camOf=[];ACC.forEach((n,c)=>{for(let i=0;i<n;i++)camOf.push(c);});
+  function paint(n){for(let i=0;i<NRED;i++)red.setColorAt(i,n===2&&camOf[i]!==1?C_SIL:C_HOT);red.instanceColor.needsUpdate=true;}
+  s.add(gray,red);
+  // gerador fixo, para a mesma cena toda vez
+  let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+  const SP=.17;
+  // cena 0: grade de todos os clientes, vermelhos espalhados
+  const cols=50,rows=Math.ceil(TOTAL/cols),slots=[];
+  for(let i=0;i<TOTAL;i++)slots.push(i);
+  for(let i=slots.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[slots[i],slots[j]]=[slots[j],slots[i]];}
+  const gridPos=k=>[(k%cols-(cols-1)/2)*SP,0,(Math.floor(k/cols)-(rows-1)/2)*SP];
+  const st=[{g:[],r:[]},{g:[],r:[]},{g:[],r:[]}];
+  for(let i=0;i<NGRAY;i++)st[0].g.push(gridPos(slots[i]));
+  for(let i=0;i<NRED;i++)st[0].r.push(i<ACEITOU?gridPos(slots[NGRAY+i]):[0,-3,0]);
+  // cena 1: dois blocos empilhados, nunca aceitou e aceitou alguma
+  const block=(n,cx,w)=>{const a=[];for(let i=0;i<n;i++){const l=Math.floor(i/(w*w)),k=i%(w*w);a.push([cx+(k%w-(w-1)/2)*SP,l*SP+.06,(Math.floor(k/w)-(w-1)/2)*SP]);}return a;};
+  st[1].g=block(NGRAY,-1.9,16);
+  st[1].r=block(ACEITOU,1.9,16).concat(Array.from({length:NRED-ACEITOU},()=>[1.9,-3,0]));
+  // cena 2: uma coluna por campanha, cada ponto é um aceite; a base vira poeira no chão
+  for(let i=0;i<NGRAY;i++){const p=gridPos(slots[i]);st[2].g.push([p[0]*1.6,-.05,p[2]*1.3-1]);}
+  const GAPX=1.45;ACC.forEach((n,c)=>{const cx=(c-2)*GAPX;for(let i=0;i<n;i++){const l=Math.floor(i/16),k=i%16;st[2].r.push([cx+(k%4-1.5)*SP,l*SP+.06,(Math.floor(k/4)-1.5)*SP]);}});
+  const cur={g:st[0].g.map(p=>[p[0],p[1]+4+rnd()*3,p[2]]),r:st[0].r.map(p=>[p[0],p[1]+4+rnd()*3,p[2]])};
+  let from={g:cur.g.map(p=>p.slice()),r:cur.r.map(p=>p.slice())},tStart=performance.now(),gFrom=1,DUR=1400;
+  const tgtScale={g:1,r:1};let gScale=1;
+  const M=new THREE.Matrix4(),Q=new THREE.Quaternion(),S=new THREE.Vector3(),P=new THREE.Vector3();
+  // rótulos das colunas
+  const labs=ACC.map((n,c)=>{const t=document.createElement("div");t.className="lbl fade"+(c===1?" hot":"");t.textContent=br(CAMP[c].v)+"%";host.appendChild(t);const b=document.createElement("div");b.className="lbl base fade";b.textContent="Camp. "+(c+1);host.appendChild(b);return{t,b,x:(c-2)*1.45,h:Math.ceil(n/16)*SP+.2};});
+  const mk=(cls,html)=>{const d=document.createElement("div");d.className="lbl big fade "+cls;d.innerHTML=html;d.style.opacity=0;host.appendChild(d);return d;};
+  const zBack=-(rows-1)/2*SP;
+  const sceneLabs=[
+    [{el:mk("","2.002<small>clientes no total</small>"),p:[-1.4,.35,zBack]},{el:mk("hot","419<small>responderam a alguma campanha</small>"),p:[1.4,.35,zBack]}],
+    [{el:mk("","1.583<small>nunca responderam</small>"),p:[-1.9,Math.ceil(NGRAY/256)*SP+.35,0]},{el:mk("hot","419<small>responderam a alguma</small>"),p:[1.9,Math.ceil(ACEITOU/256)*SP+.75,0]}],
+    []];
+  const capT=document.getElementById("cap-t"),capS=document.getElementById("cap-s");
+  const CAPS=[["Cada ponto é um cliente.","Todos os 2.002 clientes. Em vermelho, quem respondeu a pelo menos uma campanha."],["Quem respondeu.","Os clientes separados entre quem respondeu a alguma campanha e quem nunca respondeu."],["Cada ponto é um aceite.","A campanha 2 juntou só 26 aceites, contra 132 a 152 das outras."]];
+  const ORDER=[2,1,0];let scene=2,auto=!reduce,last=performance.now();
+  function go(n,user){from={g:cur.g.map(p=>p.slice()),r:cur.r.map(p=>p.slice())};gFrom=gs;tStart=performance.now();scene=n;if(user)auto=false;last=performance.now();
+    document.querySelectorAll(".steps button").forEach(b=>b.classList.toggle("on",+b.dataset.s===n));
+    capT.textContent=CAPS[n][0];capS.textContent=CAPS[n][1];
+    gScale=n===2?.35:1;paint(n);
+    labs.forEach(l=>{l.t.style.opacity=l.b.style.opacity=n===2?1:0});
+    sceneLabs.forEach((arr,i)=>arr.forEach(o=>o.el.style.opacity=i===n?1:0));
+    
+  }
+  document.querySelectorAll(".steps button").forEach(b=>b.addEventListener("click",()=>go(+b.dataset.s,true)));
+  let mx=0,my=0;host.addEventListener("pointermove",e=>{const rc=host.getBoundingClientRect();mx=(e.clientX-rc.left)/rc.width-.5;my=(e.clientY-rc.top)/rc.height-.5;});
+  const v=new THREE.Vector3();
+  function place(x,y,el){v.set(x,y,0).project(cam);el.style.left=((v.x+1)/2*W())+"px";el.style.top=((1-v.y)/2*H())+"px";}
+  let gs=1;
+  function upd(mesh,arr,src,tgt,scale,k){for(let i=0;i<arr.length;i++){const a=arr[i],f=src[i],b=tgt[i],d=Math.min(1,Math.max(0,k*1.25-(i%97)/97*.25));a[0]=f[0]+(b[0]-f[0])*d;a[1]=f[1]+(b[1]-f[1])*d;a[2]=f[2]+(b[2]-f[2])*d;const sc=a[1]<-1?0:scale;P.set(a[0],a[1],a[2]);S.set(sc,sc,sc);M.compose(P,Q,S);mesh.setMatrixAt(i,M);}mesh.instanceMatrix.needsUpdate=true;}
+  function frame(t){
+    if(auto&&t-last>4200)go(ORDER[(ORDER.indexOf(scene)+1)%3],false);
+    const lin=reduce?1:Math.min(1,(t-tStart)/DUR),k=lin<.5?4*lin*lin*lin:1-Math.pow(-2*lin+2,3)/2;gs=gFrom+(gScale-gFrom)*k;
+    upd(gray,cur.g,from.g,st[scene].g,gs,k);upd(red,cur.r,from.r,st[scene].r,1,k);
+    const tx=mx*1.2,ty=my*.6;
+    cam.position.set(tx,4.6-ty,9.2);cam.lookAt(0,.25,0);
+    labs.forEach(l=>{place(l.x,l.h,l.t);place(l.x,0,l.b)});
+    sceneLabs.forEach(arr=>arr.forEach(o=>{v.set(o.p[0],o.p[1],o.p[2]).project(cam);o.el.style.left=((v.x+1)/2*W())+"px";o.el.style.top=((1-v.y)/2*H())+"px";}));
+    glow.position.x+=((scene===2?-1.45:scene===1?1.9:0)-glow.position.x)*.05;
+    r.render(s,cam);requestAnimationFrame(frame);
+  }
+  go(2,false);requestAnimationFrame(frame);
+  addEventListener("resize",()=>{r.setSize(W(),H());cam.aspect=W()/H();cam.updateProjectionMatrix()});
+})();
+</script>
