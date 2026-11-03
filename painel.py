@@ -44,7 +44,7 @@ THREE_JS = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
 # Pacote reduzido do Plotly, só com barras e afins, na versão do plotly.py.
 PLOTLY_BASICO = f"https://cdn.plot.ly/plotly-basic-{get_plotlyjs_version()}.min.js"
 
-TITULO = "Campanhas de marketing: quem responde e quem não responde"
+TITULO = "Quem responde às campanhas de marketing?"
 CREDITO = (
     "Dados do case público de marketing do iFood (Kaggle, licença CC0). "
     "Projeto de estudo, sem relação oficial com o iFood."
@@ -650,8 +650,16 @@ _CSS = """
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero { height: 300px; }
   .lbl.big { font-size: 20px; }
+  /* Em telas estreitas a legenda do número quebra em linhas para caber. */
+  .lbl.big small { white-space: normal; width: 9.5em; margin: 2px auto 0; }
+  /* Fundo escuro atrás dos números para não se perderem nas esferas. */
+  .lbl.big { background: rgba(11,13,18,.78); border-radius: 10px; padding: 4px 8px 6px; }
   .steps button { padding: 7px 9px; font-size: 11.5px; }
   .sec, [class*="st-key-secao_"] { padding: 16px; }
+}
+@media (max-width: 360px) {
+  .lbl.big { font-size: 18px; padding: 4px 6px 5px; }
+  .lbl.big small { width: 7.5em; font-size: 11.5px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .sec, [class*="st-key-secao_"] { animation: none; }
@@ -863,6 +871,23 @@ let mx = 0, my = 0;
 host.addEventListener("pointermove", e => { const rc = host.getBoundingClientRect(); mx = (e.clientX - rc.left) / rc.width - .5; my = (e.clientY - rc.top) / rc.height - .5; pedirQuadro(); });
 const v = new THREE.Vector3(), M = new THREE.Matrix4(), Q = new THREE.Quaternion(), S = new THREE.Vector3(), P = new THREE.Vector3();
 function por(x, y, z, el){ v.set(x, y, z).project(cam); el.style.left = ((v.x + 1) / 2 * W()) + "px"; el.style.top = ((1 - v.y) / 2 * H()) + "px"; }
+// Afasta dois rótulos lado a lado para não se sobreporem, e mantém os dois
+// dentro da cena. É só layout, em pixels.
+function separar(a, b){
+  const wa = a.offsetWidth, wb = b.offsetWidth, folga = 20, borda = 10;
+  let xa = parseFloat(a.style.left), xb = parseFloat(b.style.left);
+  const minimo = (wa + wb) / 2 + folga;
+  if (xb - xa < minimo) { const meio = (xa + xb) / 2; xa = meio - minimo / 2; xb = meio + minimo / 2; }
+  const sobraEsq = borda - (xa - wa / 2), sobraDir = (xb + wb / 2) - (W() - borda);
+  if (sobraEsq > 0) { xa += sobraEsq; xb += sobraEsq; } else if (sobraDir > 0) { xa -= sobraDir; xb -= sobraDir; }
+  a.style.left = xa + "px"; b.style.left = xb + "px";
+}
+// Os números grandes nunca sobem por cima da legenda do canto superior.
+const legenda = host.querySelector(".hero-cap");
+function abaixoDaLegenda(el){
+  const limite = legenda.offsetTop + legenda.offsetHeight + 8 + el.offsetHeight;  // top é a base do rótulo
+  if (parseFloat(el.style.top) < limite) el.style.top = limite + "px";
+}
 function mover(mesh, arr, src, alvo, escala, k){
   for (let i = 0; i < arr.length; i++) {
     const a = arr[i], f = src[i], b = alvo[i], d = Math.min(1, Math.max(0, k * 1.25 - (i % 97) / 97 * .25));
@@ -886,7 +911,7 @@ function quadro(t){
   }
   cam.position.set(mx * 1.2, (4.6 - my * .6) * rec, 9.2 * rec); cam.lookAt(0, .25, 0);
   colunas.forEach(c => { por(c.x, c.h, 0, c.t); por(c.x, 0, 0, c.b); });
-  rotulosCena.forEach(lista => lista.forEach(o => por(o.p[0], o.p[1], o.p[2], o.el)));
+  rotulosCena.forEach(lista => { lista.forEach(o => por(o.p[0], o.p[1], o.p[2], o.el)); if (lista.length === 2) separar(lista[0].el, lista[1].el); lista.forEach(o => abaixoDaLegenda(o.el)); });
   r.render(s, cam);
   if (emTransicao) pedirQuadro();
 }

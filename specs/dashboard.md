@@ -53,7 +53,7 @@ Adicione plotly às dependências com uv.
    app precisa recriá-lo a partir de raw/iFood.xlsx.
 
 ## 4. CONTEÚDO DA TELA, nesta ordem
-   Título: "Campanhas de marketing: quem responde e quem não responde"
+   Título: "Quem responde às campanhas de marketing?"
    Subtítulo curto dizendo a base (clientes e campanhas, números do mart).
    a) Quatro cartões, do mart resumo: clientes, taxa de aceite geral,
       % de clientes que aceitaram alguma campanha, e gasto médio de quem
@@ -119,6 +119,8 @@ Adicione plotly às dependências com uv.
   plana, em posições embaralhadas com semente fixa. Quem respondeu a
   alguma em vermelho, o resto em cinza. Em cima da grade, o total de
   clientes e quantos responderam a alguma (este em vermelho).
+  Os dois números ficam afastados e nunca se sobrepõem, em nenhuma largura
+  de tela, e não saem da cena.
 - Três botões abaixo da cena, nesta ordem: Por campanha, Quem respondeu,
   Todos os clientes. A cena troca sozinha a cada 4 segundos, nessa
   ordem, até o usuário clicar num botão, e depois para no que ele

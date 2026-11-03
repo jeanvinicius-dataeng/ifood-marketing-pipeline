@@ -42,7 +42,7 @@ implementado e for diferente daqui deve ser ajustado para ficar igual.
    app precisa recriá-lo a partir de raw/iFood.xlsx.
 
 ## 4. CONTEÚDO DA TELA, nesta ordem
-   Título: "Campanhas de marketing: quem responde e quem não responde"
+   Título: "Quem responde às campanhas de marketing?"
    Subtítulo curto dizendo a base (clientes e campanhas, números do mart).
    a) Quatro cartões, do mart resumo: clientes, taxa de aceite geral,
       % de clientes que aceitaram alguma campanha, e gasto médio de quem
@@ -108,6 +108,8 @@ implementado e for diferente daqui deve ser ajustado para ficar igual.
   plana, em posições embaralhadas com semente fixa. Quem respondeu a
   alguma em vermelho, o resto em cinza. Em cima da grade, o total de
   clientes e quantos responderam a alguma (este em vermelho).
+  Os dois números ficam afastados e nunca se sobrepõem, em nenhuma largura
+  de tela, e não saem da cena.
 - Três botões abaixo da cena, nesta ordem: Por campanha, Quem respondeu,
   Todos os clientes. A cena troca sozinha a cada 4 segundos, nessa
   ordem, até o usuário clicar num botão, e depois para no que ele
@@ -310,7 +312,7 @@ def _iframe_topo(p: painel.Painel) -> str:
 
 
 def main() -> None:
-    st.set_page_config(page_title="Campanhas de marketing", layout="wide")
+    st.set_page_config(page_title=painel.TITULO, layout="wide")
     st.markdown(f"<style>{painel.css()}{CSS_STREAMLIT}</style>", unsafe_allow_html=True)
 
     if not BANCO.exists():
